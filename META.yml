@@ -1,0 +1,27 @@
+---
+abstract: 'Handle config files containing Perl hashes'
+author:
+  - 'minimalist <minimal@cpan.org>'
+build_requires:
+  FindBin: 0
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Config-Hash
+requires:
+  Carp: 0
+  File::Basename: 0
+  Hash::Merge: 0
+  perl: v5.6.0
+  strict: 0
+  warnings: 0
+resources:
+  homepage: https://github.com/naturalist/config-hash
+  repository: https://github.com/naturalist/config-hash.git
+version: 0.91

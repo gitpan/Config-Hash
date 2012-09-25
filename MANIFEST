@@ -1,0 +1,15 @@
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+dist.ini
+lib/Config/Hash.pm
+t/bin/test.conf
+t/bin/test_bad.conf
+t/bin/test_bad2.conf
+t/bin/test_bad3.conf
+t/bin/test_merge.conf
+t/bin/test_merge2.conf
+t/config.t
+t/release-pod-syntax.t
