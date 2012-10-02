@@ -13,6 +13,8 @@ my %WriteMakefileArgs = (
   "AUTHOR" => "minimalist <minimal\@cpan.org>",
   "BUILD_REQUIRES" => {
     "FindBin" => 0,
+    "Test::Deep" => 0,
+    "Test::Exception" => 0,
     "Test::More" => 0
   },
   "CONFIGURE_REQUIRES" => {
@@ -29,7 +31,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.911",
+  "VERSION" => "0.912",
   "test" => {
     "TESTS" => "t/*.t"
   }

@@ -4,6 +4,8 @@ author:
   - 'minimalist <minimal@cpan.org>'
 build_requires:
   FindBin: 0
+  Test::Deep: 0
+  Test::Exception: 0
   Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
@@ -24,4 +26,4 @@ requires:
 resources:
   homepage: https://github.com/naturalist/config-hash
   repository: https://github.com/naturalist/config-hash.git
-version: 0.911
+version: 0.912
