@@ -17,7 +17,6 @@ meta-spec:
   version: 1.4
 name: Config-Hash
 requires:
-  Carp: 0
   File::Basename: 0
   Hash::Merge: 0
   perl: v5.6.0
@@ -26,4 +25,4 @@ requires:
 resources:
   homepage: https://github.com/naturalist/config-hash
   repository: https://github.com/naturalist/config-hash.git
-version: 0.912
+version: 0.913

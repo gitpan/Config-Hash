@@ -25,13 +25,12 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Config::Hash",
   "PREREQ_PM" => {
-    "Carp" => 0,
     "File::Basename" => 0,
     "Hash::Merge" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.912",
+  "VERSION" => "0.913",
   "test" => {
     "TESTS" => "t/*.t"
   }
