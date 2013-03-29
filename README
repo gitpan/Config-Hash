@@ -50,6 +50,34 @@ DESCRIPTION
     Simple yet powerful config module. Why simple? Because it uses Perl
     hashes. Why powerful? Because it uses Perl hashes.
 
+MERGING
+    Config::Hash merges two hashes so that the second hash overrides the
+    first one. Let's say we have two hashes, A and B. Merging will proceed
+    as follows:
+
+    *   Each key in B that doesn't contain a hash will be copied to A.
+        Duplicate keys will be overwriten in favor of B.
+
+    *   Each key in B that contains a hash will be merged using the same
+        algorithm described here.
+
+    Example:
+
+        # Example 1
+        $a      = { a => 1, b => 2 };
+        $b      = { a => 3 };
+        $merged = { a => 2, b => 2 };
+
+        # Example 2
+        $a      = { a => { b => 'foo' } };
+        $b      = { a => { b => 'baz' }, c => 'bar' };
+        $merged = { a => { b => 'baz', c => 'bar' } };    # Hashes merge
+
+        # Example 3:
+        $a      = { a => [ 1, 2, 3 ] };
+        $b      = { a => [] };
+        $merged = { a => [] };            # Non-hashes overwrite the other key
+
 ATTRIBUTES
   filename
     Full pathname of the config file.
@@ -135,7 +163,7 @@ SUBROUTINES
 
         my $value = $c->get('bar.foo.baz');
         my $same  = $c->get('bar')->{foo}->{baz};
-        my $again = $c->hash->{bar}->{foo}->{baz};
+        my $again = $c->data->{bar}->{foo}->{baz};
 
     By default the subhash separator is a dot, but this can be changed via
     the "separator" attribute.

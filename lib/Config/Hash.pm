@@ -5,9 +5,8 @@ use warnings;
 use v5.06;
 
 use File::Basename;
-use Hash::Merge;
 
-our $VERSION = '0.913';
+our $VERSION = '0.915';
 
 sub new {
     my ( $class, %args ) = @_;
@@ -21,12 +20,8 @@ sub new {
 
     if ( defined $self->{filename} ) {
 
-        Hash::Merge::set_behavior('RIGHT_PRECEDENT');
-
         # Load the main config file
-        my $data =
-          Hash::Merge::merge( $self->{data},
-            $self->load( $self->{filename} ) );
+        my $data = merge( $self->{data}, $self->load( $self->{filename} ) );
 
         # Break up the path in chunks
         my ( $name, $dir, $ext ) = fileparse( $self->{filename}, qr/\.[^.]*/ );
@@ -37,8 +32,7 @@ sub new {
             for my $m (@modes) {
                 my $filename = sprintf( "%s%s_%s%s", $dir, $name, $m, $ext );
                 if ( -e $filename ) {
-                    $data =
-                      Hash::Merge::merge( $data, $self->load($filename) );
+                    $data = merge( $data, $self->load($filename) );
                 }
             }
         }
@@ -78,6 +72,7 @@ sub load {
 
 sub get {
     my ( $self, $path ) = @_;
+    return unless $path;
     my @a = split( $self->{separator}, $path );
     my $val = $self->{data};
     for my $chunk (@a) {
@@ -89,6 +84,24 @@ sub get {
         }
     }
     return $val;
+}
+
+sub merge {
+    my ( $a, $b ) = @_;
+    return $b
+      if !ref($a)
+      || !ref($b)
+      || ref($a) ne ref($b)
+      || ref($a) ne 'HASH';
+
+    for my $k ( keys %$b ) {
+        $a->{$k} =
+          exists $a->{$k}
+          ? merge( $a->{$k}, $b->{$k} )
+          : $b->{$k};
+    }
+
+    return $a;
 }
 
 sub param { $_[0]->{param} }
@@ -153,6 +166,46 @@ precedent given to the config file.
 
 Simple yet powerful config module. Why simple? Because it uses Perl hashes.
 Why powerful? Because it uses Perl hashes.
+
+=head1 MERGING
+
+Config::Hash merges two hashes so that the second hash overrides the first
+one. Let's say we have two hashes, A and B. Merging will proceed as follows:
+
+=over
+
+=item
+
+Each key in B that doesn't contain a hash will be copied to A. Duplicate
+keys will be overwriten in favor of B.
+
+=cut
+
+=item
+
+Each key in B that contains a hash will be merged using the same algorithm
+described here.
+
+=cut
+
+=back
+
+Example:
+
+    # Example 1
+    $a      = { a => 1, b => 2 };
+    $b      = { a => 3 };
+    $merged = { a => 2, b => 2 };
+
+    # Example 2
+    $a      = { a => { b => 'foo' } };
+    $b      = { a => { b => 'baz' }, c => 'bar' };
+    $merged = { a => { b => 'baz', c => 'bar' } };    # Hashes merge
+
+    # Example 3:
+    $a      = { a => [ 1, 2, 3 ] };
+    $b      = { a => [] };
+    $merged = { a => [] };            # Non-hashes overwrite the other key
 
 =head1 ATTRIBUTES
 
@@ -247,7 +300,7 @@ Get a value from the config hash.
 
     my $value = $c->get('bar.foo.baz');
     my $same  = $c->get('bar')->{foo}->{baz};
-    my $again = $c->hash->{bar}->{foo}->{baz};
+    my $again = $c->data->{bar}->{foo}->{baz};
 
 By default the subhash separator is a dot, but this can be changed via the
 L</separator> attribute.

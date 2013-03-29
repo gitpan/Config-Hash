@@ -26,11 +26,10 @@ my %WriteMakefileArgs = (
   "NAME" => "Config::Hash",
   "PREREQ_PM" => {
     "File::Basename" => 0,
-    "Hash::Merge" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.913",
+  "VERSION" => "0.915",
   "test" => {
     "TESTS" => "t/*.t"
   }
