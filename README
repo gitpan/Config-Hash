@@ -138,20 +138,22 @@ ATTRIBUTES
             param    => { base_path => '/path/to/stuff' }
         );
 
-    Param is initialized as a variable $p inside the config file, so it
-    could be accessed this way:
+    Each key of the "param" hash can be accessed via a function with the
+    same name inside the config file:
 
         # app.conf
 
         {
             name => 'Rick James',
-            path => $p->{base_path} . 'rick/james'
+            path => base_path() . 'rick/james'
         };
 
     The evaluation of the config code is isolated from the rest of the code,
     so it doesn't have access to $self. If you need to use $self, you'll
-    have to pass it in the "params" hash and then reference it with
-    "$p->{self}"
+    have to pass it in the "params" hash and then reference it with "self()"
+
+    Note: You will have to add "()" to the function name, otherwise Perl
+    will not recognize it as such and will die with an error.
 
   separator
     A regular expression for the value separator used by "get". The default

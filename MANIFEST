@@ -9,8 +9,10 @@ t/bin/test.conf
 t/bin/test_bad.conf
 t/bin/test_bad2.conf
 t/bin/test_bad3.conf
+t/bin/test_bad4.conf
 t/bin/test_merge.conf
 t/bin/test_merge2.conf
+t/bin/test_param.conf
 t/config.t
 t/merge.t
 t/release-pod-syntax.t

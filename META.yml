@@ -24,4 +24,4 @@ requires:
 resources:
   homepage: https://github.com/naturalist/config-hash
   repository: https://github.com/naturalist/config-hash.git
-version: 0.915
+version: 0.920
